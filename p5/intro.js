@@ -1,5 +1,6 @@
 //images
 let me;
+
 let r1;
 let g1;
 let b1;
@@ -115,6 +116,7 @@ function setup (){
 }
 
 function draw(){
+  cursor('https://raw.githubusercontent.com/monicavgong/consume/main/cursor.png');
   createCanvas(windowWidth, windowHeight);
   imageMode(CORNERS);
   background(245, 233, 244);
@@ -242,4 +244,5 @@ function mousePressed() {
     g10 = 0;
     b10 = 0;
   }
+
 }
