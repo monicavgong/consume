@@ -1,6 +1,8 @@
 //images
 let me;
 let me2;
+let finalbg;
+
 let lefteye;
 let righteye;
 let nose;
@@ -8,6 +10,7 @@ let mouth;
 let rightear;
 let leftear;
 
+let link;
 
 let r1;
 let g1;
@@ -96,6 +99,9 @@ let faceRecBool = false;
 //face detection button
 let faceRecButton;
 
+//capture button
+let captureButton;
+
 //third level boolean
 let level3Bool = false;
 
@@ -115,7 +121,8 @@ function preload(){
 	mouth = loadImage("images/mouth/mouth1.png");
 	leftear = loadImage("images/ear/ear5.png");
 	rightear = loadImage("images/ear/ear7.png");
-	me2 = loadImage("images/background/face3.png")
+	me2 = loadImage("images/background/face3.png");
+	finalbg = loadImage("images/page3.png");
 }
 
 function setup (){
@@ -127,10 +134,17 @@ function setup (){
 
 	//create and hide the face detection button
 	//if you want a different event to trigger level 3, you don't need to use this
-	faceRecButton = createButton("Stop Face Detection");
-	faceRecButton.position(100, 200);
+	faceRecButton = createButton("I'm Finished");
+	faceRecButton.position(850, 635);
 	faceRecButton.style('z-index', '1');
 	faceRecButton.hide();
+
+	//capture button
+	captureButton = createButton("Take a Selfie");
+	captureButton.position(750, 635);
+	captureButton.style('z-index', '1');
+	captureButton.hide();
+	captureButton.mousePressed(saveToFile);
 
 	//initialize the web cam.
 	//if you have a simple screen between the intro and
@@ -197,6 +211,11 @@ function setup (){
 
 	//set the intro boolena to true
 	introBool = true;
+
+}
+
+function saveToFile(){
+	saveCanvas(canvas, 'StolenIdentity', 'jpg');
 }
 
 function draw(){
@@ -236,6 +255,8 @@ function draw(){
 		background(245, 233, 244);
 		imageMode(CENTER);
 		image(me, 845, 446, 800, 833);
+
+		captureButton.hide();
 
 		//ellipse 1
 		fill(r1, g1, b1);
@@ -296,13 +317,17 @@ function draw(){
 		//showing the button. Again, if you want somethign else to trigger the next level
 		//you can get rid of this.
 		faceRecButton.show();
+		captureButton.show();
 
 		//if the button is pressed, trigger level3
 		faceRecButton.mousePressed(level3);
 
+		//if the button is presses, capture image
+		captureButton.mousePressed(saveToFile);
+
 		//this translate will center the image
 		push();
-		translate(windowWidth/2 - capture.width/2, windowHeight/2.5 - capture.height/2.5)
+		translate(windowWidth/2 - capture.width/2, windowHeight/3 - capture.height/3);
 		imageMode(CORNERS);
 		image(capture, 0, 0, w, h);
 		positions = tracker.getCurrentPosition();
@@ -328,17 +353,29 @@ function draw(){
 
 	//level 3 funciton
 	function level3(){
+		background(245, 233, 244);
+		image(finalbg, 845, 450, 1100, 183);
+
 		//hide the button
 		faceRecButton.hide();
+		captureButton.hide();
 
 		//flip the faceRecBool and level3Bool. these are being referenced in draw()
 		faceRecBool = false;
 		level3Bool = true;
 
-		background(245, 233, 244);
-		textSize(40);
 		fill(0);
-		text('Level 3', windowWidth/2, windowHeight/2);
+		textSize(20);
+		link = createA('https://www.instagram.com/monicavgong', 'spread our image!', '_blank');
+		link = createA('https://www.instagram.com/monicavgong', 'spread our image!', '_blank');
+		link.position(775, 1900);
+		link.style('z-index', '-1');
+		link.style('font-size', '16');
+		link.hide();
+		link.style('color', 'hotpink');
+		link.style('font-family', 'Helvetica');
+
+
 	}
 
 
